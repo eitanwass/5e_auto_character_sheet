@@ -4,7 +4,7 @@ const path = require('path');
 let mainWindow;
 
 const createWindow = () => {
-    mainWindow = new BrowserWindow({width: 800, height: 600});
+    mainWindow = new BrowserWindow({width: 1400, height: 740});
 
     const startUrl = process.env.ELECTRON_START_URL || new URL(`file://${path.join(__dirname, '../build/index.html')}`);
     mainWindow.loadURL(startUrl);

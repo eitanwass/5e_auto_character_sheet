@@ -2,22 +2,24 @@ import React from 'react';
 import {CharacterProvider} from "./contexts/CharacterContext";
 import RaceSelect from "./components/RaceSelect";
 import './App.css';
-import Attributes from "./components/Attributes";
-import {Grid} from "@material-ui/core";
+import AbilityScores from "./components/AbilityScores";
+import {Grid,Paper} from "@material-ui/core";
 
 const App = () => {
     return (
         <div className="App">
             <CharacterProvider>
                 <Grid container spacing={5}>
-                    <Grid container item spacing={3} xs={3}>
-                        <Attributes/>
+                    <Grid item spacing={3} xs={3}>
+                        <AbilityScores/>
+                        {/*<Paper>AbilityScores</Paper>*/}
                     </Grid>
-                    <Grid container item spacing={3} xs={6}>
+                    <Grid item spacing={3} xs={6}>
                         <RaceSelect/>
+                        <Paper>Race selection</Paper>
                     </Grid>
-                    <Grid container item spacing={3} xs={3}>
-                        Here go stats
+                    <Grid item spacing={3} xs={3}>
+                        <Paper>Here go stats</Paper>
                     </Grid>
                 </Grid>
             </CharacterProvider>
