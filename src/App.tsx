@@ -43,14 +43,19 @@ const App = () => {
     const classes = useStyles();
     const [races, _setRaces] = useState<raceType[]>([defaultRace])
 
-    const setRaces = (races: raceType[]) =>
+    const setRaces = (races: raceType[]) => {
+        let raceNameCount = {};
         _setRaces(
             _.map(races, (race: raceType) => {
-                if (_.filter(races, (checkedRace) => checkedRace.name === race.name).length > 1)
-                    return {...race, name: `${race.name} ${race.source}`};
+                raceNameCount[race.name] = _.get(raceNameCount, race.name,
+                    _.reduce(races, (count: number, n: raceType) => n.name === race.name ? ++count : count, 0));
+                if (raceNameCount[race.name] > 1) {
+                    return {...race, name: `${race.name} [${race.source}]`};
+                }
                 return race;
             })
         );
+    };
 
     useEffect(() => {
         axios.get("https://5e.tools/data/races.json")
