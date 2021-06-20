@@ -13,10 +13,11 @@ const useStyles = makeStyles({
         backgroundColor: '#353843',
         margin: '1vh 1vh',
         paddingTop: '3vh',
-        fontSize: '0.8rem',
+        fontSize: '0.7rem',
         color: 'white',
     },
     abilityChecks: {
+        paddingLeft: '0',
         textAlign: 'left',
     }
 });
@@ -27,10 +28,10 @@ const AbilityScores = () => {
     return (
         <Card className={classes.card}>
             {
-                _.map(abilitiesProperties(abilityScores), (abilityScore) =>
-                    <Grid container item xs={12} spacing={3}>
-                        <Grid item xs={6}><AbilityScore label={abilityScore.abilityName} value={abilityScore.abilityScoreValue}/></Grid>
-                        <Grid item xs={6} className={classes.abilityChecks}><AbilityChecks checks={abilityScore.abilityChecks}/></Grid>
+                _.map(abilitiesProperties, (abilityProperty) =>
+                    <Grid container item xs={12} spacing={2}>
+                        <Grid item xs={5}><AbilityScore label={abilityProperty.abilityName} value={abilityScores[abilityProperty.abilityName]}/></Grid>
+                        <Grid item xs={7} className={classes.abilityChecks}><AbilityChecks checks={abilityProperty.abilityChecks} abilityValue={abilityScores[abilityProperty.abilityName]}/></Grid>
                     </Grid>)
             }
         </Card>
