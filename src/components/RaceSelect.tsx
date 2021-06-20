@@ -3,7 +3,7 @@ import axios from "axios";
 import _ from 'lodash';
 import { makeStyles, TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import {defaultRace, raceType} from "../types/race-types";
+import {defaultRace, raceType} from "../types/raceTypes";
 import {CharacterContext} from '../contexts/CharacterContext';
 
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 
 const RaceSelect = () => {
     const classes = useStyles();
-    const {setRace} = useContext(CharacterContext);
+    const {race} = useContext(CharacterContext);
     const [races, _setRaces] = useState<raceType[]>([defaultRace]);
 
     const setRaces = (races: raceType[]) => {
@@ -47,7 +47,7 @@ const RaceSelect = () => {
         style={{width: 300}}
         options={races}
         classes={{option: classes.option}}
-        onChange={(event: any, newValue: raceType | null) => {setRace(newValue);}}
+        onChange={(event: any, newValue: raceType | null) => {if (newValue) race[1](newValue);}}
         autoHighlight
         getOptionLabel={(option) => option.name}
         renderOption={(option) => <>{option.name}</>}

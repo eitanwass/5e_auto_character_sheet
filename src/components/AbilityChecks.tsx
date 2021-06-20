@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import _ from 'lodash';
 import {Checkbox, FormControlLabel, makeStyles} from '@material-ui/core';
-import {CheckBoxOutlineBlank, CheckBox} from '@material-ui/icons'
+import {CheckBoxOutlineBlank, CheckBox} from '@material-ui/icons';
+import { CharacterContext } from '../contexts/CharacterContext';
 
 const useStyles = makeStyles({
     root: {
@@ -29,13 +30,14 @@ const useStyles = makeStyles({
     }
 });
 
-const AbilityChecks = ({checks, abilityValue}: {checks: string[], abilityValue: number}) => {
+const AbilityChecks = ({checks, abilityScoreValue}: {checks: string[], abilityScoreValue: number}) => {
     const classes = useStyles();
+    const {abilityChecks} = useContext(CharacterContext);
 
     return (
         <div>
             <div>
-                <span>{abilityValue}</span>
+                <span>{abilityScoreValue}</span>
                 <Checkbox classes={{root: classes.savingThrows}}
                         icon={<CheckBoxOutlineBlank fontSize="small"/>}
                         checkedIcon={<CheckBox fontSize="small"/>}
@@ -46,7 +48,7 @@ const AbilityChecks = ({checks, abilityValue}: {checks: string[], abilityValue: 
             {
                 _.map(checks, (check) =>
                     <div>
-                        <span>{abilityValue}</span>
+                        <span>{abilityChecks[0][_.camelCase(check)]}</span>
                         <Checkbox classes={{root: classes.checkbox}}
                                 icon={<CheckBoxOutlineBlank fontSize="small"/>}
                                 checkedIcon={<CheckBox fontSize="small"/>}

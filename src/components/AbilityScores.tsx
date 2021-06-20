@@ -28,11 +28,19 @@ const AbilityScores = () => {
     return (
         <Card className={classes.card}>
             {
-                _.map(abilitiesProperties, (abilityProperty) =>
-                    <Grid container item xs={12} spacing={2}>
-                        <Grid item xs={5}><AbilityScore label={abilityProperty.abilityName} value={abilityScores[abilityProperty.abilityName]}/></Grid>
-                        <Grid item xs={7} className={classes.abilityChecks}><AbilityChecks checks={abilityProperty.abilityChecks} abilityValue={abilityScores[abilityProperty.abilityName]}/></Grid>
-                    </Grid>)
+                _.map(abilitiesProperties, (abilityProperty) => {
+                    const abilityScoreValue: number = abilityScores[0][abilityProperty.abilityName];
+                    return (
+                        <Grid container item xs={12} spacing={2}>
+                            <Grid item xs={5}>
+                                <AbilityScore label={abilityProperty.abilityName} value={abilityScoreValue}/>
+                            </Grid>
+                            <Grid item xs={7} className={classes.abilityChecks}>
+                                <AbilityChecks checks={abilityProperty.abilityChecks} abilityScoreValue={abilityScoreValue}/>
+                            </Grid>
+                        </Grid>
+                    )
+                })
             }
         </Card>
     );

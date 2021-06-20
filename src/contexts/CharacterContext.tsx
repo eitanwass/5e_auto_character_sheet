@@ -1,44 +1,26 @@
 import React, {createContext, useState} from 'react';
-import {raceType, defaultRace} from "../types/race-types";
+import {raceType, defaultRace} from "../types/raceTypes";
+import {abilityScoresType, defaultAbilityScores} from "../types/abilityScoresTypes";
+import {abilityChecksType, defaultAbilityChecks} from "../types/abilityChecksTypes";
 
-interface AbilityScoresType {
-    strength: number,
-    dexterity: number,
-    constitution: number,
-    intelligence: number,
-    wisdom: number,
-    charisma: number,
-}
-
-const defaultAbilityScores = {
-    strength: 10,
-    dexterity: 10,
-    constitution: 10,
-    intelligence: 10,
-    wisdom: 10,
-    charisma: 10,
-};
+type useStateType<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
 interface CharacterContextType {
-    race: raceType | null,
-    setRace: React.Dispatch<React.SetStateAction<raceType | null>>,
-    abilityScores: AbilityScoresType,
-    setAbilityScores: React.Dispatch<React.SetStateAction<AbilityScoresType>>,
-    expiriencePoints: number, 
-    setExpiriencePoints: React.Dispatch<React.SetStateAction<number>>,
+    race: useStateType<raceType>,
+    abilityScores: useStateType<abilityScoresType>,
+    abilityChecks: useStateType<abilityChecksType>,
+    expiriencePoints: useStateType<number>, 
 }
 
 const CharacterContext = createContext<CharacterContextType>(undefined!);
 
 
 const CharacterProvider = ({children}) => {
-    const [expiriencePoints, setExpiriencePoints] = useState<number>(0);
-    const [abilityScores, setAbilityScores] = useState<AbilityScoresType>(defaultAbilityScores);
-    const [race, setRace] = useState<raceType | null>(defaultRace);
     const contextValues = {
-        race, setRace,
-        abilityScores, setAbilityScores,
-        expiriencePoints, setExpiriencePoints
+        race: useState<raceType>(defaultRace),
+        abilityScores: useState<abilityScoresType>(defaultAbilityScores),
+        abilityChecks: useState<abilityChecksType>(defaultAbilityChecks),
+        expiriencePoints: useState<number>(0),
     };
 
     return (<CharacterContext.Provider value={contextValues}>
