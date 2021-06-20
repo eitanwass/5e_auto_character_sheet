@@ -29,7 +29,7 @@ const AbilityScores = () => {
         <Card className={classes.card}>
             {
                 _.map(abilitiesProperties, (abilityProperty) => {
-                    const abilityScoreValue: number = abilityScores[0][abilityProperty.abilityName];
+                    const abilityScoreValue: number = abilityScores.getter[abilityProperty.abilityName];
                     return (
                         <Grid container item xs={12} spacing={2}>
                             <Grid item xs={5}>

@@ -1,11 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
+import {valueToModifier} from '../utils';
 
 import './AbilityScore.css';
 
 
 const AbilityScore = ({label, value}: {label: string, value: number}) => {
-    const abilityScoreModifier = Math.floor((value - 10) / 2);
+    const abilityScoreModifier = valueToModifier(value);
     const compiledLabel = _.toUpper(label.substring(0, 3));
 
     return (
