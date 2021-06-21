@@ -36,7 +36,7 @@ const AbilityScores = () => {
                                 <AbilityScore label={abilityProperty.abilityName} value={abilityScoreValue}/>
                             </Grid>
                             <Grid item xs={7} className={classes.abilityChecks}>
-                                <AbilityChecks checks={abilityProperty.abilityChecks} abilityScoreValue={abilityScoreValue}/>
+                                <AbilityChecks abilityName={abilityProperty.abilityName} checks={abilityProperty.abilityChecks} abilityScoreValue={abilityScoreValue}/>
                             </Grid>
                         </Grid>
                     )

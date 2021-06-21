@@ -2,6 +2,7 @@ import React, {createContext, useState} from 'react';
 import _ from 'lodash';
 import {raceType, defaultRace} from "../types/raceTypes";
 import {abilityScoresType, defaultAbilityScores} from "../types/abilityScoresTypes";
+import { abilitySaveThrowsType, defaultAbilitySaveThrows } from '../types/abilitySaveThrowsTypes';
 import {abilityChecksProficientType, defaultAbilityChecks} from "../types/abilityChecksTypes";
 
 import {abilitiesProperties} from '../consts/abilitiesConsts';
@@ -18,6 +19,7 @@ interface CharacterContextType {
     race: useStateType<raceType>,
     abilityScores: useStateType<abilityScoresType>,
     abilityChecksProficiency: useStateType<abilityChecksProficientType>,
+    abilitySaveThrows: useStateType<abilitySaveThrowsType>,
     expiriencePoints: useStateType<number>, 
 
     getAbilityCheckValue: (abilityCheckName: string) => number,
@@ -31,18 +33,30 @@ const getZippedGetterSetter = <T,>(getter: T, setter: reactSetter<T>): {getter: 
 const CharacterProvider = ({children}) => {
     const [race, setRace] = useState<raceType>(defaultRace);
     const [abilityScores, setAbilityScores] = useState<abilityScoresType>(defaultAbilityScores);
+    const [abilitySaveThrows, setAbilitySaveThrows] = useState<abilitySaveThrowsType>(defaultAbilitySaveThrows);
     const [abilityChecksProficiency, setAbilityChecksProficiency] = useState<abilityChecksProficientType>(defaultAbilityChecks);
     const [expiriencePoints, setExpiriencePoints] = useState<number>(0);
 
     const getAbilityCheckValue = (abilityCheckName: string): number => {
         const compiledAbilityCheckName = _.camelCase(abilityCheckName);
-        const abilityCheckAbilityName = _.find(abilitiesProperties, 
-            (abilityProperties) => _.map(abilityProperties.abilityChecks, _.camelCase).includes(compiledAbilityCheckName))?.abilityName;
-        if (abilityCheckAbilityName === undefined) return -1;
 
-        const abilityScoreValue = abilityScores[abilityCheckAbilityName];
-        console.debug(abilityChecksProficiency);
-        const addition = abilityChecksProficiency[compiledAbilityCheckName] ? valueToModifier(abilityScoreValue) + 5 : 0;
+        let isProficient = false;
+        let finalAbilityCheckName = undefined;
+
+        if (_.keys(abilitySaveThrows).includes(compiledAbilityCheckName)) {
+            finalAbilityCheckName = compiledAbilityCheckName;
+            isProficient = abilitySaveThrows[compiledAbilityCheckName];
+        } else {
+            finalAbilityCheckName = _.find(abilitiesProperties, 
+                (abilityProperties) => _.map(abilityProperties.abilityChecks, _.camelCase).includes(compiledAbilityCheckName))?.abilityName;
+            isProficient = _.get(abilityChecksProficiency, compiledAbilityCheckName, false);
+        }
+            
+        if (finalAbilityCheckName === undefined) return -1;
+
+        const abilityScoreValue = abilityScores[finalAbilityCheckName];
+        const addition = isProficient ? valueToModifier(abilityScoreValue) + 5 : 0;
+
         return abilityScoreValue + addition;
     };
 
@@ -50,6 +64,7 @@ const CharacterProvider = ({children}) => {
         race: getZippedGetterSetter(race, setRace),
         abilityScores: getZippedGetterSetter(abilityScores, setAbilityScores),
         abilityChecksProficiency: getZippedGetterSetter(abilityChecksProficiency, setAbilityChecksProficiency),
+        abilitySaveThrows: getZippedGetterSetter(abilitySaveThrows, setAbilitySaveThrows),
         expiriencePoints: getZippedGetterSetter(expiriencePoints, setExpiriencePoints),
 
         getAbilityCheckValue: getAbilityCheckValue,

@@ -31,18 +31,19 @@ const useStyles = makeStyles({
     }
 });
 
-const AbilityChecks = ({checks, abilityScoreValue}: {checks: string[], abilityScoreValue: number}) => {
+const AbilityChecks = ({abilityName, checks, abilityScoreValue}: {abilityName: string, checks: string[], abilityScoreValue: number}) => {
     const classes = useStyles();
-    const {abilityChecksProficiency, getAbilityCheckValue} = useContext(CharacterContext);
+    const {abilityChecksProficiency, abilitySaveThrows, getAbilityCheckValue} = useContext(CharacterContext);
 
     return (
         <div>
             <div>
-                <span>{abilityScoreValue}</span>
+                <span>{getAbilityCheckValue(abilityName)}</span>
                 <Checkbox classes={{root: classes.savingThrows}}
                         icon={<CheckBoxOutlineBlank fontSize="small"/>}
                         checkedIcon={<CheckBox fontSize="small"/>}
                         name="checkedI"
+                        onChange={(e) => abilitySaveThrows.setter(prev => ({...prev, [_.camelCase(abilityName)]: e.target.checked}))}
                         />
                 <label>Saving Throws</label>
             </div>
