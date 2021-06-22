@@ -31,18 +31,24 @@ interface CharacterContextType {
 const CharacterContext = createContext<CharacterContextType>(undefined!);
 
 
-const getZippedGetterSetter = <T,>(getter: T, setter: reactSetter<T>): {getter: T, setter: reactSetter<T>} => ({getter, setter});
+const UseGetterSetter = <T,>(defaultValue: T): {getter: T, setter: reactSetter<T>} => {
+    return _.zipObject(["getter", "setter"], useState<T>(defaultValue));
+};
 
 const CharacterProvider = ({children}) => {
-    const [race, setRace] = useState<raceType>(defaultRace);
-    const [abilityScores, setAbilityScores] = useState<abilityScoresType>(defaultAbilityScores);
-    const [abilitySaveThrows, setAbilitySaveThrows] = useState<abilitySaveThrowsType>(defaultAbilitySaveThrows);
-    const [abilityChecksProficiency, setAbilityChecksProficiency] = useState<abilityChecksProficientType>(defaultAbilityChecks);
-    const [expiriencePoints, setExpiriencePoints] = useState<number>(0);
+    const characterStats = {
+        expiriencePoints: UseGetterSetter<number>(0),
+    
+        race: UseGetterSetter<raceType>(defaultRace),
 
-    const [maxHealthPoints, setMaxHealthPoints] = useState<number>(0);
-    const [currentDamage, setCurrentDamage] = useState<number>(0);
-    const [temporaryHealthPoints, setTemporaryHealthPoints] = useState<number>(0);
+        abilityScores: UseGetterSetter<abilityScoresType>(defaultAbilityScores),
+        abilityChecksProficiency: UseGetterSetter<abilityChecksProficientType>(defaultAbilityChecks),
+        abilitySaveThrows: UseGetterSetter<abilitySaveThrowsType>(defaultAbilitySaveThrows),
+
+        maxHealthPoints: UseGetterSetter<number>(0),
+        currentDamage: UseGetterSetter<number>(0),
+        temporaryHealthPoints: UseGetterSetter<number>(0),
+    }
 
     const getAbilityCheckValue = (abilityCheckName: string): number => {
         const compiledAbilityCheckName = _.camelCase(abilityCheckName);
@@ -50,34 +56,25 @@ const CharacterProvider = ({children}) => {
         let isProficient = false;
         let finalAbilityCheckName = undefined;
 
-        if (_.keys(abilitySaveThrows).includes(compiledAbilityCheckName)) {
+        if (_.keys(characterStats.abilitySaveThrows.getter).includes(compiledAbilityCheckName)) {
             finalAbilityCheckName = compiledAbilityCheckName;
-            isProficient = abilitySaveThrows[compiledAbilityCheckName];
+            isProficient = characterStats.abilitySaveThrows.getter[compiledAbilityCheckName];
         } else {
             finalAbilityCheckName = _.find(abilitiesProperties, 
                 (abilityProperties) => _.map(abilityProperties.abilityChecks, _.camelCase).includes(compiledAbilityCheckName))?.abilityName;
-            isProficient = _.get(abilityChecksProficiency, compiledAbilityCheckName, false);
+            isProficient = _.get(characterStats.abilityChecksProficiency.getter, compiledAbilityCheckName, false);
         }
             
         if (finalAbilityCheckName === undefined) return -1;
 
-        const abilityScoreValue = abilityScores[finalAbilityCheckName];
+        const abilityScoreValue = characterStats.abilityScores.getter[finalAbilityCheckName];
         const addition = isProficient ? valueToModifier(abilityScoreValue) + 5 : 0;
 
         return abilityScoreValue + addition;
     };
 
     const contextValues = {
-        race: getZippedGetterSetter(race, setRace),
-        abilityScores: getZippedGetterSetter(abilityScores, setAbilityScores),
-        abilityChecksProficiency: getZippedGetterSetter(abilityChecksProficiency, setAbilityChecksProficiency),
-        abilitySaveThrows: getZippedGetterSetter(abilitySaveThrows, setAbilitySaveThrows),
-        expiriencePoints: getZippedGetterSetter(expiriencePoints, setExpiriencePoints),
-
-        maxHealthPoints: getZippedGetterSetter(maxHealthPoints, setMaxHealthPoints),
-        currentDamage: getZippedGetterSetter(currentDamage, setCurrentDamage),
-        temporaryHealthPoints: getZippedGetterSetter(temporaryHealthPoints, setTemporaryHealthPoints),
-
+        ...characterStats,
         getAbilityCheckValue,
     };
 
