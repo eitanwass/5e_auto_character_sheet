@@ -3,6 +3,7 @@ import {CharacterProvider} from "./contexts/CharacterContext";
 import RaceSelect from "./components/RaceSelect";
 import './App.css';
 import AbilityScores from "./components/AbilityScores";
+import HealthPanel from './components/HealthPanel';
 import {Grid,Paper} from "@material-ui/core";
 
 const App = () => {
@@ -19,7 +20,8 @@ const App = () => {
                         <Paper>Race selection</Paper>
                     </Grid>
                     <Grid item spacing={3} xs={3}>
-                        <Paper>Here go stats</Paper>
+                        <HealthPanel/>
+                        {/* <Paper>Here go stats</Paper> */}
                     </Grid>
                 </Grid>
             </CharacterProvider>

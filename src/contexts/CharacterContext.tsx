@@ -21,6 +21,9 @@ interface CharacterContextType {
     abilityChecksProficiency: useStateType<abilityChecksProficientType>,
     abilitySaveThrows: useStateType<abilitySaveThrowsType>,
     expiriencePoints: useStateType<number>, 
+    maxHealthPoints: useStateType<number>, 
+    currentDamage: useStateType<number>, 
+    temporaryHealthPoints: useStateType<number>, 
 
     getAbilityCheckValue: (abilityCheckName: string) => number,
 }
@@ -36,6 +39,10 @@ const CharacterProvider = ({children}) => {
     const [abilitySaveThrows, setAbilitySaveThrows] = useState<abilitySaveThrowsType>(defaultAbilitySaveThrows);
     const [abilityChecksProficiency, setAbilityChecksProficiency] = useState<abilityChecksProficientType>(defaultAbilityChecks);
     const [expiriencePoints, setExpiriencePoints] = useState<number>(0);
+
+    const [maxHealthPoints, setMaxHealthPoints] = useState<number>(0);
+    const [currentDamage, setCurrentDamage] = useState<number>(0);
+    const [temporaryHealthPoints, setTemporaryHealthPoints] = useState<number>(0);
 
     const getAbilityCheckValue = (abilityCheckName: string): number => {
         const compiledAbilityCheckName = _.camelCase(abilityCheckName);
@@ -67,7 +74,11 @@ const CharacterProvider = ({children}) => {
         abilitySaveThrows: getZippedGetterSetter(abilitySaveThrows, setAbilitySaveThrows),
         expiriencePoints: getZippedGetterSetter(expiriencePoints, setExpiriencePoints),
 
-        getAbilityCheckValue: getAbilityCheckValue,
+        maxHealthPoints: getZippedGetterSetter(maxHealthPoints, setMaxHealthPoints),
+        currentDamage: getZippedGetterSetter(currentDamage, setCurrentDamage),
+        temporaryHealthPoints: getZippedGetterSetter(temporaryHealthPoints, setTemporaryHealthPoints),
+
+        getAbilityCheckValue,
     };
 
     return (<CharacterContext.Provider value={contextValues}>
