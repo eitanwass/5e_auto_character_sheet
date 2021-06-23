@@ -19,10 +19,13 @@ const useStyles = makeStyles({
 
 const HealthPanel = () => {
     const classes = useStyles();
-    const {abilityScores} = useContext(CharacterContext);
+    const {maxHealthPoints, currentDamage, temporaryHealthPoints} = useContext(CharacterContext);
+
+    const currentHealth = maxHealthPoints.getter - currentDamage.getter + temporaryHealthPoints.getter;
+
     return (
         <Card className={classes.card}>
-            <RoundProgress max={48} current={48 + 24}/>
+            <RoundProgress max={maxHealthPoints.getter} current={currentHealth}/>
         </Card>
     );
 };

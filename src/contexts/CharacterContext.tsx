@@ -45,9 +45,9 @@ const CharacterProvider = ({children}) => {
         abilityChecksProficiency: UseGetterSetter<abilityChecksProficientType>(defaultAbilityChecks),
         abilitySaveThrows: UseGetterSetter<abilitySaveThrowsType>(defaultAbilitySaveThrows),
 
-        maxHealthPoints: UseGetterSetter<number>(0),
-        currentDamage: UseGetterSetter<number>(0),
-        temporaryHealthPoints: UseGetterSetter<number>(0),
+        maxHealthPoints: UseGetterSetter<number>(40),
+        currentDamage: UseGetterSetter<number>(10),
+        temporaryHealthPoints: UseGetterSetter<number>(20),
     }
 
     const getAbilityCheckValue = (abilityCheckName: string): number => {

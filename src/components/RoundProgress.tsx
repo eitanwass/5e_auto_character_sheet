@@ -1,20 +1,17 @@
 import _ from 'lodash';
-import {Typography, Box, CircularProgressProps, CircularProgress, makeStyles} from '@material-ui/core';
+import {Typography, Box, CircularProgressProps, CircularProgress} from '@material-ui/core';
 
-// const useStyles = makeStyles(
-    // {
-    // }
-// );
 
 const RoundProgress = ({current, max, props}: {current: number, max: number, props?: CircularProgressProps}) => {
-    // const classes = useStyles();
     const mainCircleValue = current / max * 100;
     const secondaryCircleValue = mainCircleValue - 100
 
     return (
       <Box position="relative" display="inline-flex">
-        <CircularProgress variant={"static"} value={_.clamp(mainCircleValue, 0, 100)} size={"9rem"} {...props} />
-        <CircularProgress color={"secondary"} variant={"static"} value={_.clamp(secondaryCircleValue, 0, 100)} size={"9rem"} style={{position: "absolute"}} {...props} />
+        <CircularProgress color={"secondary"} variant={"static"} value={_.clamp(secondaryCircleValue, 0, 100)} 
+        size={"6rem"} thickness={6} style={{position: "absolute"}} {...props} />
+        <CircularProgress variant={"static"} value={_.clamp(mainCircleValue, 0, 100)} 
+        size={"6rem"} thickness={4} {...props} />
         <Box
           top={0}
           left={0}
