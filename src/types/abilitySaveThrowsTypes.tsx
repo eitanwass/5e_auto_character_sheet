@@ -8,10 +8,10 @@ export interface abilitySaveThrowsType {
 }
 
 export const defaultAbilitySaveThrows: abilitySaveThrowsType = {
-    strength: false,
-    dexterity: false,
-    constitution: false,
-    intelligence: false,
-    wisdom: false,
-    charisma: false,
+	strength: false,
+	dexterity: false,
+	constitution: false,
+	intelligence: false,
+	wisdom: false,
+	charisma: false,
 };

@@ -1,3 +1,1 @@
-export const valueToModifier = (value: number): number => {
-    return Math.floor((value - 10) / 2);
-};
+export const valueToModifier = (value: number): number => Math.floor((value - 10) / 2);
