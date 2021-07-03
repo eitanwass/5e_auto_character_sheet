@@ -8,18 +8,16 @@ const GeneralPanel = (): JSX.Element => {
 
 	return (
 		<TabContext value={currentTab}>
-			<Card>
-				<TabList
-					onChange={(event: React.ChangeEvent<Record<string, unknown>>, newTab: string) => setCurrentTab(newTab)}
-					variant={"scrollable"}
-					scrollButtons={"auto"}>
-					<Tab label={"Character"} value={"0"} />
-					<Tab label={"Stats"} value={"1"} />
-					<Tab label={"Features"} value={"2"} />
-					<Tab label={"Equipment"} value={"3"} />
-					<Tab label={"Spells"} value={"4"} />
-				</TabList>
-			</Card>
+			<TabList
+				onChange={(event: React.ChangeEvent<Record<string, unknown>>, newTab: string) => setCurrentTab(newTab)}
+				variant={"scrollable"}
+				scrollButtons={"auto"}>
+				<Tab label={"Character"} value={"0"} />
+				<Tab label={"Stats"} value={"1"} />
+				<Tab label={"Features"} value={"2"} />
+				<Tab label={"Equipment"} value={"3"} />
+				<Tab label={"Spells"} value={"4"} />
+			</TabList>
 			<TabPanel value={"0"}>
 				Tab 0
 			</TabPanel>
