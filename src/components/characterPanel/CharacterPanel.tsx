@@ -3,6 +3,8 @@ import React from "react";
 import { Card, Grid, } from "@material-ui/core";
 
 import DetailsPanel from "./DetailsPanel";
+import PersonalityPanel from "./PersonalityPanel";
+import AppearancePanel from "./AppearancePanel";
 
 
 const CharacterPanel = (): JSX.Element => (
@@ -11,26 +13,10 @@ const CharacterPanel = (): JSX.Element => (
 			<DetailsPanel/>
 		</Grid>
 		<Grid item xs={6}>
-			<Card>
-				--Personality Traits--
-				Alignment
-				Ideals
-				Bonds
-				Flaws
-			</Card>
+			<PersonalityPanel/>
 		</Grid>
 		<Grid item xs={6}>
-			<Card>
-				--Appearance--
-				Gender
-				Age
-				Height
-				Weight
-				Eyes
-				Hair
-				Skin
-				Clothing
-			</Card>
+			<AppearancePanel/>
 		</Grid>
 		<Grid item xs={12}>
 			<Card>Group</Card>
