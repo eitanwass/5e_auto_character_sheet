@@ -7,6 +7,7 @@ import { abilityChecksProficientType, defaultAbilityChecks } from "../types/abil
 
 import { abilitiesProperties } from "../consts/abilitiesConsts";
 import { valueToModifier } from "../utils";
+import { getProficiencyBonus } from "../consts/xpLevelProf";
 
 type reactSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 
@@ -20,7 +21,7 @@ interface CharacterContextType {
     abilityScores: useStateType<abilityScoresType>,
     abilityChecksProficiency: useStateType<abilityChecksProficientType>,
     abilitySaveThrows: useStateType<abilitySaveThrowsType>,
-    expiriencePoints: useStateType<number>, 
+    experiencePoints: useStateType<number>,
     maxHealthPoints: useStateType<number>, 
     currentDamage: useStateType<number>, 
     temporaryHealthPoints: useStateType<number>, 
@@ -35,7 +36,7 @@ const UseGetterSetter = <T,>(defaultValue: T): {getter: T, setter: reactSetter<T
 
 const CharacterProvider = ({ children }: {children: JSX.Element}): JSX.Element => {
 	const characterStats = {
-		expiriencePoints: UseGetterSetter<number>(0),
+		experiencePoints: UseGetterSetter<number>(0),
     
 		race: UseGetterSetter<Race>(defaultRace),
 
@@ -61,15 +62,15 @@ const CharacterProvider = ({ children }: {children: JSX.Element}): JSX.Element =
 		else {
 			finalAbilityCheckName = _.find(abilitiesProperties, 
 				(abilityProperties) => _.map(abilityProperties.abilityChecks, _.camelCase).includes(compiledAbilityCheckName))?.abilityName;
-			isProficient = _.get(characterStats.abilityChecksProficiency.getter, compiledAbilityCheckName, false);
+			isProficient = _.get(characterStats["abilityChecksProficiency"], compiledAbilityCheckName, false);
 		}
-            
+
 		if (finalAbilityCheckName === undefined) return -1;
 
-		const abilityScoreValue = characterStats.abilityScores.getter[finalAbilityCheckName];
-		const addition = isProficient ? valueToModifier(abilityScoreValue) + 5 : 0;
+		const abilityScoreModifier = valueToModifier(characterStats.abilityScores.getter[finalAbilityCheckName]);
+		const addition = isProficient ? getProficiencyBonus(characterStats.experiencePoints.getter) : 0;
 
-		return abilityScoreValue + addition;
+		return abilityScoreModifier + addition;
 	};
 
 	const contextValues = {

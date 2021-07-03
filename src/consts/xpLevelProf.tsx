@@ -25,4 +25,4 @@ const _experiencePointsToLevel = [
 
 export const getLevel = (experiencePoints: number): number => _.last(_.takeWhile(_experiencePointsToLevel, (o) => o.xp <= experiencePoints)).level;
 
-export const getProficiencyBonus = (experiencePoints: number): number => _.last(_.takeWhile(_experiencePointsToLevel, (o) => o.xp <= experiencePoints)).level;
+export const getProficiencyBonus = (experiencePoints: number): number => _.last(_.takeWhile(_experiencePointsToLevel, (o) => o.xp <= experiencePoints)).prof;
