@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Card, Tab, Tabs } from "@material-ui/core";
+import { Tab } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
+import CharacterPanel from "./characterPanel/CharacterPanel";
 
 
 const GeneralPanel = (): JSX.Element => {
@@ -19,7 +20,7 @@ const GeneralPanel = (): JSX.Element => {
 				<Tab label={"Spells"} value={"4"} />
 			</TabList>
 			<TabPanel value={"0"}>
-				Tab 0
+				<CharacterPanel/>
 			</TabPanel>
 			<TabPanel value={"1"}>
 				Tab 1
