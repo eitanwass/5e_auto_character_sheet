@@ -1,11 +1,17 @@
 import React from "react";
 import _ from "lodash";
-import { valueToModifier } from "../utils";
+
+import { valueToModifier } from "../../utils";
 
 import "./AbilityScore.css";
 
 
-const AbilityScore = ({ label, value }: {label: string, value: number}): JSX.Element => {
+interface AbilityScoreType {
+	label: string;
+	value: number;
+}
+
+const AbilityScore = ({ label, value }: AbilityScoreType): JSX.Element => {
 	const abilityScoreModifier = valueToModifier(value);
 	const compiledLabel = _.toUpper(label.substring(0, 3));
 

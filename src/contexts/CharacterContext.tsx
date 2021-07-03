@@ -1,11 +1,12 @@
 import React, { createContext, useState } from "react";
 import _ from "lodash";
+
 import { Race, defaultRace } from "../types/raceTypes";
 import { abilityScoresType, defaultAbilityScores } from "../types/abilityScoresTypes";
 import { abilitySaveThrowsType, defaultAbilitySaveThrows } from "../types/abilitySaveThrowsTypes";
 import { abilityChecksProficientType, defaultAbilityChecks } from "../types/abilityChecksTypes";
+import { abilitiesProperties, abilitiesPropertiesTypes } from "../consts/abilitiesConsts";
 
-import { abilitiesProperties } from "../consts/abilitiesConsts";
 import { valueToModifier } from "../utils";
 import { getProficiencyBonus } from "../consts/xpLevelProf";
 
@@ -49,25 +50,30 @@ const CharacterProvider = ({ children }: {children: JSX.Element}): JSX.Element =
 		temporaryHealthPoints: UseGetterSetter<number>(20),
 	};
 
+	/* Determines the value of an ability check or saving throw.
+	*  If parameter is an ability name (e.g. strength, dexterity, etc), it is evaluated as saving throw value.
+	*  Otherwise, it checks if any of the abilities have a check that includes the parameter and evaluates
+	*  that one's value. */
 	const getAbilityCheckValue = (abilityCheckName: string): number => {
 		const compiledAbilityCheckName = _.camelCase(abilityCheckName);
 
 		let isProficient = false;
-		let finalAbilityCheckName = undefined;
+		let abilityName = undefined;
 
-		if (_.keys(characterStats.abilitySaveThrows.getter).includes(compiledAbilityCheckName)) {
-			finalAbilityCheckName = compiledAbilityCheckName;
-			isProficient = characterStats.abilitySaveThrows.getter[compiledAbilityCheckName];
+		if ((isProficient = characterStats.abilitySaveThrows.getter[compiledAbilityCheckName]) !== undefined) {
+			// Ability saving throw.
+			abilityName = compiledAbilityCheckName;
 		}
 		else {
-			finalAbilityCheckName = _.find(abilitiesProperties, 
-				(abilityProperties) => _.map(abilityProperties.abilityChecks, _.camelCase).includes(compiledAbilityCheckName))?.abilityName;
-			isProficient = _.get(characterStats["abilityChecksProficiency"], compiledAbilityCheckName, false);
+			// Ability check.
+			abilityName = _.find<abilitiesPropertiesTypes>(abilitiesProperties,
+				({ checks }) => _.map(checks, _.camelCase).includes(compiledAbilityCheckName))?.name;
+			isProficient = _.get(characterStats.abilityChecksProficiency.getter, compiledAbilityCheckName, false);
 		}
 
-		if (finalAbilityCheckName === undefined) return -1;
+		if (abilityName === undefined) return -1;
 
-		const abilityScoreModifier = valueToModifier(characterStats.abilityScores.getter[finalAbilityCheckName]);
+		const abilityScoreModifier = valueToModifier(characterStats.abilityScores.getter[abilityName]);
 		const addition = isProficient ? getProficiencyBonus(characterStats.experiencePoints.getter) : 0;
 
 		return abilityScoreModifier + addition;

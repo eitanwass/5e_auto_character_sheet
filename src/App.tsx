@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Paper } from "@material-ui/core";
 import { CharacterProvider } from "./contexts/CharacterContext";
 import RaceSelect from "./components/RaceSelect";
-import AbilityScores from "./components/AbilityScores";
+import AbilitiesPanel from "./components/abilityComponents/AbilitiesPanel";
 import HealthPanel from "./components/HealthPanel";
 import "./App.css";
 
@@ -12,7 +12,7 @@ const App = (): JSX.Element => (
 		<CharacterProvider>
 			<Grid container spacing={5}>
 				<Grid item xs={3}>
-					<AbilityScores/>
+					<AbilitiesPanel/>
 				</Grid>
 				<Grid item container direction={"column"} spacing={0} xs={6}>
 					<RaceSelect/>

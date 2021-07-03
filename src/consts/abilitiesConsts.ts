@@ -1,19 +1,19 @@
-interface abilitiesPropertiesTypes {
-    abilityName: string;
-    abilityChecks: string[];
+export interface abilitiesPropertiesTypes {
+    name: string;
+    checks: string[];
 }
 
 export const abilitiesProperties: abilitiesPropertiesTypes[] = [
-	{ abilityName: "strength", abilityChecks: ["Athletics"] },
-	{ abilityName: "dexterity", abilityChecks: ["Acrobatics", "Sleight of Hand", "Stealth"] },
-	{ abilityName: "constitution", abilityChecks: [] },
-	{ abilityName: "intelligence", abilityChecks: [
+	{ name: "strength", checks: ["Athletics"] },
+	{ name: "dexterity", checks: ["Acrobatics", "Sleight of Hand", "Stealth"] },
+	{ name: "constitution", checks: [] },
+	{ name: "intelligence", checks: [
 		"Arcana", "History", "Investigation", "Nature", "Religion"
 	] },
-	{ abilityName: "wisdom", abilityChecks: [
+	{ name: "wisdom", checks: [
 		"Animal Handling", "Insight", "Medicine", "Perception", "Survival"
 	] },
-	{ abilityName: "charisma", abilityChecks: [
+	{ name: "charisma", checks: [
 		"Deception", "Intimidation", "Performance", "Persuasion"
 	] }
 ];
