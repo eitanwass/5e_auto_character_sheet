@@ -5,6 +5,7 @@ import { Card, Grid, } from "@material-ui/core";
 import DetailsPanel from "./DetailsPanel";
 import PersonalityPanel from "./PersonalityPanel";
 import AppearancePanel from "./AppearancePanel";
+import NotesPanel from "./NotesPanel";
 
 
 const CharacterPanel = (): JSX.Element => (
@@ -22,7 +23,7 @@ const CharacterPanel = (): JSX.Element => (
 			<Card>Group</Card>
 		</Grid>
 		<Grid item xs={12}>
-			<Card>Notes</Card>
+			<NotesPanel/>
 		</Grid>
 	</Grid>
 );
