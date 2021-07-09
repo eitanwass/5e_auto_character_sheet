@@ -25,7 +25,8 @@ interface CharacterContextType {
     experiencePoints: useStateType<number>,
     maxHealthPoints: useStateType<number>, 
     currentDamage: useStateType<number>, 
-    temporaryHealthPoints: useStateType<number>, 
+    temporaryHealthPoints: useStateType<number>,
+	notes: useStateType<string[]>,
 
     getAbilityCheckValue: (abilityCheckName: string) => number,
 }
@@ -48,6 +49,8 @@ const CharacterProvider = ({ children }: {children: JSX.Element}): JSX.Element =
 		maxHealthPoints: UseGetterSetter<number>(40),
 		currentDamage: UseGetterSetter<number>(10),
 		temporaryHealthPoints: UseGetterSetter<number>(20),
+
+		notes: UseGetterSetter<string[]>([]),
 	};
 
 	/* Determines the value of an ability check or saving throw.
