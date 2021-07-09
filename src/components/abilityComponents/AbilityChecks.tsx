@@ -5,8 +5,7 @@ import { Checkbox, makeStyles } from "@material-ui/core";
 import { CheckBoxOutlineBlank, CheckBox } from "@material-ui/icons";
 
 import { CharacterContext, useStateType } from "../../contexts/CharacterContext";
-import { abilityChecksProficientType } from "../../types/abilityChecksTypes";
-import { abilitySaveThrowsType } from "../../types/abilitySaveThrowsTypes";
+import { abilityChecksProficientType, abilitySaveThrowsType } from "../../types/abilitiesTypes";
 
 interface AbilityCheckTypes {
 	label: string;

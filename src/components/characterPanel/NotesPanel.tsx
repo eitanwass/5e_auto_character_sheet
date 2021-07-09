@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Card, Grid, IconButton, makeStyles, TextField } from "@material-ui/core";
 import { Add, Delete } from "@material-ui/icons";
 import { CharacterContext } from "../../contexts/CharacterContext";

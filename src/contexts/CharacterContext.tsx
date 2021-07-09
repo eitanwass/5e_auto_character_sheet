@@ -2,44 +2,43 @@ import React, { createContext, useState } from "react";
 import _ from "lodash";
 
 import { Race, defaultRace } from "../types/raceTypes";
-import { abilityScoresType, defaultAbilityScores } from "../types/abilityScoresTypes";
-import { abilitySaveThrowsType, defaultAbilitySaveThrows } from "../types/abilitySaveThrowsTypes";
-import { abilityChecksProficientType, defaultAbilityChecks } from "../types/abilityChecksTypes";
-import { abilitiesProperties, abilitiesPropertiesTypes } from "../consts/abilitiesConsts";
+import { abilityScoresType, abilitySaveThrowsType, abilityChecksProficientType } from "../types/abilitiesTypes";
+import { defaultAbilityScores, defaultAbilityChecks, defaultAbilitySaveThrows } from "../types/abilitiesConsts";
 
+import { abilitiesProperties, abilitiesPropertiesTypes } from "../consts/abilitiesConsts";
 import { valueToModifier } from "../utils";
 import { getProficiencyBonus } from "../consts/xpLevelProf";
 
 type reactSetter<T> = React.Dispatch<React.SetStateAction<T>>;
 
 type useStateType<T> = {
-    getter: T, 
-    setter: reactSetter<T>
+	getter: T,
+	setter: reactSetter<T>
 };
 
 interface CharacterContextType {
-    race: useStateType<Race>,
-    abilityScores: useStateType<abilityScoresType>,
-    abilityChecksProficiency: useStateType<abilityChecksProficientType>,
-    abilitySaveThrows: useStateType<abilitySaveThrowsType>,
-    experiencePoints: useStateType<number>,
-    maxHealthPoints: useStateType<number>, 
-    currentDamage: useStateType<number>, 
-    temporaryHealthPoints: useStateType<number>,
+	race: useStateType<Race>,
+	abilityScores: useStateType<abilityScoresType>,
+	abilityChecksProficiency: useStateType<abilityChecksProficientType>,
+	abilitySaveThrows: useStateType<abilitySaveThrowsType>,
+	experiencePoints: useStateType<number>,
+	maxHealthPoints: useStateType<number>,
+	currentDamage: useStateType<number>,
+	temporaryHealthPoints: useStateType<number>,
 	notes: useStateType<string[]>,
 
-    getAbilityCheckValue: (abilityCheckName: string) => number,
+	getAbilityCheckValue: (abilityCheckName: string) => number,
 }
 
 const CharacterContext = createContext<CharacterContextType>(undefined!);
 
 
-const UseGetterSetter = <T,>(defaultValue: T): {getter: T, setter: reactSetter<T>} => _.zipObject(["getter", "setter"], useState<T>(defaultValue));
+const UseGetterSetter = <T, >(defaultValue: T): { getter: T, setter: reactSetter<T> } => _.zipObject(["getter", "setter"], useState<T>(defaultValue));
 
-const CharacterProvider = ({ children }: {children: JSX.Element}): JSX.Element => {
+const CharacterProvider = ({ children }: { children: JSX.Element }): JSX.Element => {
 	const characterStats = {
 		experiencePoints: UseGetterSetter<number>(0),
-    
+
 		race: UseGetterSetter<Race>(defaultRace),
 
 		abilityScores: UseGetterSetter<abilityScoresType>(defaultAbilityScores),
@@ -87,9 +86,11 @@ const CharacterProvider = ({ children }: {children: JSX.Element}): JSX.Element =
 		getAbilityCheckValue,
 	};
 
-	return (<CharacterContext.Provider value={contextValues}>
-		{children}
-	</CharacterContext.Provider>);
+	return (
+		<CharacterContext.Provider value={contextValues}>
+			{children}
+		</CharacterContext.Provider>
+	);
 };
 
 export { CharacterContext, CharacterProvider };
