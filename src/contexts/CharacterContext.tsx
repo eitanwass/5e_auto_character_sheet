@@ -90,3 +90,4 @@ const CharacterProvider = ({ children }: {children: JSX.Element}): JSX.Element =
 };
 
 export { CharacterContext, CharacterProvider };
+export type { useStateType };
